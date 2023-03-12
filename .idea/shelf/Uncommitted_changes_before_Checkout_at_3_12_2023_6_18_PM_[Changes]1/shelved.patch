@@ -1,0 +1,575 @@
+Index: src/Marouan/SessionControl/Dao/daoFiles/SessionDao.java
+===================================================================
+diff --git a/src/Marouan/SessionControl/Dao/daoFiles/SessionDao.java b/src/Marouan/SessionControl/Dao/daoFiles/SessionDao.java
+deleted file mode 100644
+--- a/src/Marouan/SessionControl/Dao/daoFiles/SessionDao.java	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
++++ /dev/null	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
+@@ -1,33 +0,0 @@
+-package Marouan.SessionControl.Dao.daoFiles;
+-
+-import Marouan.SessionControl.Dao.IDao;
+-import Marouan.SessionControl.Modele.Session;
+-import lombok.Data;
+-
+-import java.io.File;
+-import java.io.IOException;
+-import java.nio.file.Files;
+-import java.util.Arrays;
+-import java.util.HashSet;
+-import java.util.Set;
+-
+-@Data
+-public class SessionDao implements IDao <Session, Long>{
+-
+-    public Session trouverParId(Long id) {
+-        return BD_Credits().stream().filter(credit -> credit.getId_Session()==id).findFirst().get();
+-    }
+-    static Set<Session> BD_Credits() {
+-        var sessions= new HashSet<Session>(
+-                Arrays.asList(
+-                        new Session("Cj", "CjJava", "Marouan", "El Ouardi", "Cj@Pinky.com", "0666666666"),
+-                        new Session("Reyna", "ReynaJava", "Pinky", "Pinko", "Pinky@Reyna.com", "077777777"),
+-                        new Session("OM", "OmarJava", "Omar", "Midaoui", "Omar@Midaoui.com", "0888888888")
+-                ));
+-
+-
+-        return sessions;
+-
+-    }
+-}
+-
+Index: .idea/libraries/spring_context_6_0_3.xml
+===================================================================
+diff --git a/.idea/libraries/spring_context_6_0_3.xml b/.idea/libraries/spring_context_6_0_3.xml
+deleted file mode 100644
+--- a/.idea/libraries/spring_context_6_0_3.xml	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
++++ /dev/null	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
+@@ -1,10 +0,0 @@
+-<component name="libraryTable">
+-  <library name="spring-context-6.0.3">
+-    <CLASSES>
+-      <root url="jar://$PROJECT_DIR$/lib/spring-context-6.0.3.jar!/" />
+-      <root url="jar://$PROJECT_DIR$/lib/spring-core-6.0.3.jar!/" />
+-    </CLASSES>
+-    <JAVADOC />
+-    <SOURCES />
+-  </library>
+-</component>
+\ No newline at end of file
+Index: src/Marouan/SessionControl/config.properties
+===================================================================
+diff --git a/src/Marouan/SessionControl/config.properties b/src/Marouan/SessionControl/config.properties
+deleted file mode 100644
+--- a/src/Marouan/SessionControl/config.properties	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
++++ /dev/null	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
+@@ -1,3 +0,0 @@
+-DAO = Marouan.CreditSimulator.Dao.daoVolatile.SessionDao
+-SERVICE = Marouan.CreditSimulator.Metier.SessionMetier
+-CONTROLLER = Marouan.CreditSimulator.Presentation.SessionControleur
+\ No newline at end of file
+Index: src/Marouan/SessionControl/Presentation/ISessionControleur.java
+===================================================================
+diff --git a/src/Marouan/SessionControl/Presentation/ISessionControleur.java b/src/Marouan/SessionControl/Presentation/ISessionControleur.java
+deleted file mode 100644
+--- a/src/Marouan/SessionControl/Presentation/ISessionControleur.java	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
++++ /dev/null	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
+@@ -1,6 +0,0 @@
+-package Marouan.SessionControl.Presentation;
+-
+-public interface ISessionControleur {
+-    void afficherSession_Time(long id_Session);
+-
+-}
+Index: src/Marouan/SessionControl/Presentation/SessionControleur.java
+===================================================================
+diff --git a/src/Marouan/SessionControl/Presentation/SessionControleur.java b/src/Marouan/SessionControl/Presentation/SessionControleur.java
+deleted file mode 100644
+--- a/src/Marouan/SessionControl/Presentation/SessionControleur.java	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
++++ /dev/null	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
+@@ -1,15 +0,0 @@
+-package Marouan.SessionControl.Presentation;
+-
+-import Marouan.SessionControl.Metier.ISessionMetier;
+-import lombok.Data;
+-@Data
+-public class SessionControleur implements ISessionControleur {
+-    ISessionMetier SessionMetier;
+-    @Override
+-    public void afficherSession_Time(long id_Session){
+-        var session = SessionMetier.calculerSessionTime(id_Session);
+-        System.out.println(session);
+-
+-    }
+-
+-}
+Index: README.md
+===================================================================
+diff --git a/README.md b/README.md
+deleted file mode 100644
+--- a/README.md	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
++++ /dev/null	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
+@@ -1,4 +0,0 @@
+-# SimulationCredit
+-Credit Simulator Using Java
+-
+-This is a Bank Credit Simulator with Java based on DAO-SERVICE-PRESENTATION-CONTROLLER
+Index: SessionControl.iml
+===================================================================
+diff --git a/SessionControl.iml b/SessionControl.iml
+deleted file mode 100644
+--- a/SessionControl.iml	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
++++ /dev/null	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
+@@ -1,23 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<module type="JAVA_MODULE" version="4">
+-  <component name="FacetManager">
+-    <facet type="Spring" name="Spring">
+-      <configuration>
+-        <fileset id="fileset" name="Sprinc IOC" removed="false">
+-          <file>file://$MODULE_DIR$/src/sprinc-IOC.xml</file>
+-        </fileset>
+-      </configuration>
+-    </facet>
+-  </component>
+-  <component name="NewModuleRootManager" inherit-compiler-output="true">
+-    <exclude-output />
+-    <content url="file://$MODULE_DIR$">
+-      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+-    </content>
+-    <orderEntry type="inheritedJdk" />
+-    <orderEntry type="sourceFolder" forTests="false" />
+-    <orderEntry type="library" name="lombok-1.18.26" level="project" />
+-    <orderEntry type="library" name="spring-context-6.0.3" level="project" />
+-    <orderEntry type="library" name="lib" level="project" />
+-  </component>
+-</module>
+\ No newline at end of file
+Index: src/Marouan/SessionControl/Metier/SessionMetier.java
+===================================================================
+diff --git a/src/Marouan/SessionControl/Metier/SessionMetier.java b/src/Marouan/SessionControl/Metier/SessionMetier.java
+deleted file mode 100644
+--- a/src/Marouan/SessionControl/Metier/SessionMetier.java	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
++++ /dev/null	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
+@@ -1,32 +0,0 @@
+-package Marouan.SessionControl.Metier;
+-
+-import Marouan.SessionControl.Dao.IDao;
+-import Marouan.SessionControl.Modele.Session;
+-import lombok.Data;
+-
+-import java.io.IOException;
+-import java.time.Duration;
+-import java.time.LocalDateTime;
+-import java.util.Date;
+-
+-@Data
+-public class SessionMetier implements ISessionMetier {
+-
+-    IDao<Session,Long> SessionDao;
+-
+-    @Override
+-    public Session calculerSessionTime(long id_Session){
+-
+-            var session= SessionDao.trouverParId(id_Session);
+-            if(session==null)
+-                throw new RuntimeException("Session introuvable ou non ouverte");
+-            else {
+-                session.setLogout_Date();
+-                Duration duration = Duration.between(session.getLogin_Date(), session.getLogout_Date());
+-                session.setSession_Time(duration);
+-            }
+-
+-            return session;
+-        }
+-    }
+-
+Index: src/Marouan/SessionControl/Modele/Session.java
+===================================================================
+diff --git a/src/Marouan/SessionControl/Modele/Session.java b/src/Marouan/SessionControl/Modele/Session.java
+deleted file mode 100644
+--- a/src/Marouan/SessionControl/Modele/Session.java	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
++++ /dev/null	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
+@@ -1,70 +0,0 @@
+-package Marouan.SessionControl.Modele;
+-import lombok.*;
+-
+-import java.time.Duration;
+-import java.time.LocalDateTime;
+-
+-@Data @AllArgsConstructor @NoArgsConstructor
+-public class Session {
+-
+-    public static int session_Counter = 0;
+-
+-    private  long id_Session;
+-    private String login;
+-    private String password;
+-    private String nom;
+-    private String prenom;
+-    private String email;
+-    private String telephone;
+-
+-    private boolean isLogged;
+-
+-    //private long Login_Date;
+-    //private long Logout_Date;
+-
+-    LocalDateTime Login_Date;
+-    LocalDateTime Logout_Date;
+-
+-    private Duration Session_Time;
+-
+-
+-    public Session(String login, String password, String nom, String prenom, String email, String telephone) {
+-        this.id_Session = session_Counter++;
+-        this.login = login;
+-        this.password = password;
+-        this.nom = nom;
+-        this.prenom = prenom;
+-        this.email = email;
+-        this.telephone = telephone;
+-        this.Login_Date = LocalDateTime.now();
+-        isLogged = true;
+-    }
+-
+-    public void setLogout_Date() {
+-        Logout_Date = this.Login_Date.plusMinutes(3);
+-    }
+-    public void setSession_Time(Duration session_Time){
+-        Session_Time = session_Time;
+-    }
+-
+-    @Override
+-    public String toString() {
+-        //each line is a field
+-        return
+-                "Id_Session= " + id_Session + "\n" +
+-                "Login= " + login + "\n" +
+-                "Password= " + password + "\n" +
+-                "Nom= " + nom + "\n" +
+-                "Prenom= " + prenom + "\n" +
+-                "Email= " + email + "\n" +
+-                "Telephone= " + telephone + "\n" +
+-                "IsLogged= " + isLogged + "\n" +
+-                "Login_Date= " + Login_Date.getHour()+ ":" + Login_Date.getMinute() + ":" + Login_Date.getSecond() + "s" + "\n" +
+-                "Logout_Date= " + Logout_Date.getHour()+ ":" + Logout_Date.getMinute() + ":" + Logout_Date.getSecond() + "s" + "\n" +
+-                "Session_Time= " + Session_Time.toMinutes() + " Minutes" + "\n";
+-
+-    }
+-
+-}
+-
+-
+Index: src/Marouan/SessionControl/ElOuardi_Marouan_SessionControlApp.java
+===================================================================
+diff --git a/src/Marouan/SessionControl/ElOuardi_Marouan_SessionControlApp.java b/src/Marouan/SessionControl/ElOuardi_Marouan_SessionControlApp.java
+deleted file mode 100644
+--- a/src/Marouan/SessionControl/ElOuardi_Marouan_SessionControlApp.java	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
++++ /dev/null	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
+@@ -1,96 +0,0 @@
+-package Marouan.SessionControl;
+-
+-import Marouan.SessionControl.Presentation.SessionControleur;
+-import Marouan.SessionControl.Presentation.ISessionControleur;
+-import Marouan.SessionControl.Dao.IDao;
+-import Marouan.SessionControl.Dao.daoVolatile.SessionDao;
+-import Marouan.SessionControl.Metier.SessionMetier;
+-import Marouan.SessionControl.Metier.ISessionMetier;
+-import Marouan.SessionControl.Modele.Session;
+-import org.springframework.context.ApplicationContext;
+-import org.springframework.context.support.ClassPathXmlApplicationContext;
+-
+-import java.lang.reflect.Method;
+-import java.util.Properties;
+-
+-public class ElOuardi_Marouan_SessionControlApp {
+-    static ISessionControleur SessionControleur;
+-
+-    public static void main(String[] args) throws Exception {
+-    Test3();
+-    }
+-    //    ===================================================================================================================================================
+-    //                                                                    TEST 1
+-    //    ===================================================================================================================================================
+-    public static void Test1(){
+-        IDao<Session, Long> dao = new SessionDao();
+-        SessionControleur = new SessionControleur();
+-        ISessionMetier metier = new SessionMetier();
+-
+-        ((SessionMetier) metier).setSessionDao(dao);
+-        ((SessionControleur) SessionControleur).setSessionMetier(metier);
+-        try{
+-            SessionControleur.afficherSession_Time(1L);
+-
+-        }catch (Exception e) {
+-            System.out.println(e.getMessage());
+-        }
+-        System.out.println("Test 1 Completed");
+-    }
+-//    =================================================================================================================================================
+-//                                                                    TEST 2
+-//    =================================================================================================================================================
+-    public static void Test2(){
+-        IDao<Session, Long> dao = null;
+-        ISessionControleur controleur= null;
+-        ISessionMetier metier= null;
+-
+-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+-//        classLoader.getResourceAsStream("Marouan/SessionControl/config.properties");
+-        var config = classLoader.getResourceAsStream("Marouan/SessionControl/config.properties");
+-        Properties props = new Properties();
+-        try
+-    {
+-            props.load(config);
+-            var daoClass = props.getProperty("DAO");
+-            var serviceClass = props.getProperty("SERVICE");
+-            var controllerClass = props.getProperty("CONTROLLER");
+-
+-            Class cDao = Class.forName(daoClass);
+-            dao = (IDao<Session, Long>) cDao.getDeclaredConstructor().newInstance();
+-
+-            Class cMetier = Class.forName(serviceClass);
+-            metier = (ISessionMetier) cDao.getDeclaredConstructor().newInstance();
+-
+-            Class cControleur = Class.forName(controllerClass);
+-            controleur = (ISessionControleur) cDao.getDeclaredConstructor().newInstance();
+-
+-        //Dependecys Injection
+-
+-        Method setMetier = cControleur.getMethod("setSessionMetier", ISessionMetier.class);
+-        setMetier.invoke(controleur,metier);
+-
+-        Method setDao = cMetier.getMethod("setSessionDao", IDao.class);
+-        setDao.invoke(metier,dao);
+-
+-
+-        controleur.afficherSession_Time(1L);
+-
+-        }
+-        catch (Exception e)
+-        {
+-            throw new RuntimeException(e.getMessage());
+-        }
+-        finally {
+-            props.clear();
+-        }
+-    }
+-    //    ============================================================================================================================================
+-    //                                                                    TEST 3
+-    //    ============================================================================================================================================
+-    public static void Test3(){
+-        ApplicationContext application = new ClassPathXmlApplicationContext("sprinc-IOC.xml");
+-        ISessionControleur controleur = application.getBean(ISessionControleur.class);
+-        controleur.afficherSession_Time(1L);
+-    }
+-}
+\ No newline at end of file
+Index: src/Marouan/SessionControl/Metier/ISessionMetier.java
+===================================================================
+diff --git a/src/Marouan/SessionControl/Metier/ISessionMetier.java b/src/Marouan/SessionControl/Metier/ISessionMetier.java
+deleted file mode 100644
+--- a/src/Marouan/SessionControl/Metier/ISessionMetier.java	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
++++ /dev/null	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
+@@ -1,12 +0,0 @@
+-package Marouan.SessionControl.Metier;
+-
+-import Marouan.SessionControl.Modele.Session;
+-
+-import java.io.IOException;
+-
+-public interface ISessionMetier {
+-
+-
+-
+-    Session calculerSessionTime(long id_Session);
+-}
+Index: src/sprinc-IOC.xml
+===================================================================
+diff --git a/src/sprinc-IOC.xml b/src/sprinc-IOC.xml
+deleted file mode 100644
+--- a/src/sprinc-IOC.xml	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
++++ /dev/null	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
+@@ -1,13 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<beans xmlns="http://www.springframework.org/schema/beans"
+-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+-
+-    <bean id="dao" class="Marouan.SessionControl.Dao.daoVolatile.SessionDao"/>
+-    <bean id="metier" class="Marouan.SessionControl.Metier.SessionMetier">
+-        <property name="sessionDao" ref="dao"/>
+-    </bean>
+-    <bean id="controller" class="Marouan.SessionControl.Presentation.SessionControleur">
+-        <property name="SessionMetier" ref="metier"/>
+-    </bean>
+-</beans>
+Index: src/Marouan/SessionControl/Dao/IDao.java
+===================================================================
+diff --git a/src/Marouan/SessionControl/Dao/IDao.java b/src/Marouan/SessionControl/Dao/IDao.java
+deleted file mode 100644
+--- a/src/Marouan/SessionControl/Dao/IDao.java	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
++++ /dev/null	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
+@@ -1,7 +0,0 @@
+-package Marouan.SessionControl.Dao;
+-
+-import java.io.IOException;
+-
+-public interface IDao<T,ID> {
+-    T trouverParId(ID id);
+-}
+Index: src/Marouan/SessionControl/Dao/daoVolatile/SessionDao.java
+===================================================================
+diff --git a/src/Marouan/SessionControl/Dao/daoVolatile/SessionDao.java b/src/Marouan/SessionControl/Dao/daoVolatile/SessionDao.java
+deleted file mode 100644
+--- a/src/Marouan/SessionControl/Dao/daoVolatile/SessionDao.java	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
++++ /dev/null	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
+@@ -1,28 +0,0 @@
+-package Marouan.SessionControl.Dao.daoVolatile;
+-
+-import Marouan.SessionControl.Dao.IDao;
+-import Marouan.SessionControl.Modele.Session;
+-import lombok.Data;
+-
+-import java.util.Arrays;
+-import java.util.HashSet;
+-import java.util.Set;
+-
+-@Data
+-public class SessionDao implements IDao <Session, Long>{
+-
+-        public Session trouverParId(Long id) {
+-           return BD_Sessions().stream().filter(session -> session.getId_Session()==id).findFirst().get();
+-        }
+-        static Set<Session> BD_Sessions(){
+-            var Sessions= new HashSet<Session>(
+-                    Arrays.asList(
+-                            new Session("Cj", "CjJava", "Marouan", "El Ouardi", "Cj@Pinky.com", "0666666666"),
+-                            new Session("Reyna", "ReynaJava", "Pinky", "Pinko", "Pinky@Reyna.com", "077777777"),
+-                            new Session("OM", "OmarJava", "Omar", "Midaoui", "Omar@Midaoui.com", "0888888888")
+-                    ));
+-            return Sessions;
+-
+-        }
+-}
+-
+Index: .idea/libraries/lib.xml
+===================================================================
+diff --git a/.idea/libraries/lib.xml b/.idea/libraries/lib.xml
+deleted file mode 100644
+--- a/.idea/libraries/lib.xml	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
++++ /dev/null	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
+@@ -1,10 +0,0 @@
+-<component name="libraryTable">
+-  <library name="lib">
+-    <CLASSES>
+-      <root url="file://$PROJECT_DIR$/lib" />
+-    </CLASSES>
+-    <JAVADOC />
+-    <SOURCES />
+-    <jarDirectory url="file://$PROJECT_DIR$/lib" recursive="false" />
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectModuleManager\">\r\n    <modules>\r\n      <module fileurl=\"file://$PROJECT_DIR$/SessionControl.iml\" filepath=\"$PROJECT_DIR$/SessionControl.iml\" />\r\n    </modules>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+--- a/.idea/modules.xml	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
++++ b/.idea/modules.xml	(date 1678641359685)
+@@ -2,7 +2,7 @@
+ <project version="4">
+   <component name="ProjectModuleManager">
+     <modules>
+-      <module fileurl="file://$PROJECT_DIR$/SessionControl.iml" filepath="$PROJECT_DIR$/SessionControl.iml" />
++      <module fileurl="file://$PROJECT_DIR$/SimulationCredit.iml" filepath="$PROJECT_DIR$/SimulationCredit.iml" />
+     </modules>
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"95e4be49-161e-4bd4-a598-b9ea29ed3636\" name=\"Changes\" comment=\"init 2\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Interface\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2MPlfj1ESxdrcIcNtPYlJopbBVw\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Electro Fatal\\Desktop\\SimulationCredit\\lib\" />\r\n      <recent name=\"C:\\Users\\Electro Fatal\\Desktop\\SimulationCredit\\\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"ElOuardi_Marouan_CreditSimulatorApp\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"Marouan.CreditSimulator.ElOuardi_Marouan_CreditSimulatorApp\" />\r\n      <module name=\"SimulationCredit\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"Marouan.CreditSimulator.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.ElOuardi_Marouan_CreditSimulatorApp\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"95e4be49-161e-4bd4-a598-b9ea29ed3636\" name=\"Changes\" comment=\"\" />\r\n      <created>1677677212028</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1677677212028</updated>\r\n      <workItem from=\"1677677212043\" duration=\"6222000\" />\r\n      <workItem from=\"1677833817275\" duration=\"99000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
++++ b/.idea/workspace.xml	(date 1678641430675)
+@@ -10,6 +10,11 @@
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+   </component>
++  <component name="ChangesViewManager">
++    <option name="groupingKeys">
++      <option value="directory" />
++    </option>
++  </component>
+   <component name="FileTemplateManagerImpl">
+     <option name="RECENT_TEMPLATES">
+       <list>
+@@ -17,6 +22,9 @@
+         <option value="Class" />
+       </list>
+     </option>
++  </component>
++  <component name="Git.Settings">
++    <option name="UPDATE_TYPE" value="REBASE" />
+   </component>
+   <component name="MarkdownSettingsMigration">
+     <option name="stateVersion" value="1" />
+@@ -79,10 +87,34 @@
+       <updated>1677677212028</updated>
+       <workItem from="1677677212043" duration="6222000" />
+       <workItem from="1677833817275" duration="99000" />
++      <workItem from="1678032208212" duration="307000" />
+     </task>
++    <task id="LOCAL-00001" summary="init1">
++      <created>1678032387994</created>
++      <option name="number" value="00001" />
++      <option name="presentableId" value="LOCAL-00001" />
++      <option name="project" value="LOCAL" />
++      <updated>1678032387994</updated>
++    </task>
++    <option name="localTasksCounter" value="2" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+     <option name="version" value="3" />
+   </component>
++  <component name="Vcs.Log.Tabs.Properties">
++    <option name="TAB_STATES">
++      <map>
++        <entry key="MAIN">
++          <value>
++            <State />
++          </value>
++        </entry>
++      </map>
++    </option>
++  </component>
++  <component name="VcsManagerConfiguration">
++    <MESSAGE value="init1" />
++    <option name="LAST_COMMIT_MESSAGE" value="init1" />
++  </component>
+ </project>
+\ No newline at end of file
+Index: config.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>dao.daoVolatile.SessionControlDao;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/config.txt b/config.txt
+--- a/config.txt	(revision e652a02a262f9535c602f83039d286fa45dd2b96)
++++ b/config.txt	(date 1678641361950)
+@@ -1,1 +1,1 @@
+-dao.daoVolatile.SessionControlDao;
+\ No newline at end of file
++dao.daoVolatile.CreditDao;
+\ No newline at end of file

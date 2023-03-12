@@ -1,0 +1,359 @@
+Index: src/Marouan/CreditSimulator/ElOuardi_Marouan_CreditSimulatorApp.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Marouan.CreditSimulator;\r\n\r\nimport Marouan.CreditSimulator.Presentation.CreditControleur;\r\nimport Marouan.CreditSimulator.Presentation.ICreditControleur;\r\nimport Marouan.CreditSimulator.Dao.IDao;\r\nimport Marouan.CreditSimulator.Dao.daoVolatile.CreditDao;\r\nimport Marouan.CreditSimulator.Metier.CreditMetier;\r\nimport Marouan.CreditSimulator.Metier.ICreditMetier;\r\nimport Marouan.CreditSimulator.Modele.Credit;\r\n\r\nimport java.util.Properties;\r\n\r\npublic class ElOuardi_Marouan_CreditSimulatorApp {\r\n    static ICreditControleur creditControleur;\r\n\r\n    public static void main(String[] args) {\r\n    Test1();\r\n    }\r\n    public static void Test1(){\r\n        IDao<Credit, Long> dao = new CreditDao();\r\n        creditControleur = new CreditControleur();\r\n        ICreditMetier metier = new CreditMetier();\r\n\r\n        ((CreditMetier) metier).setCreditDao(dao);\r\n        ((CreditControleur) creditControleur).setCreditMetier(metier);\r\n        try{\r\n            creditControleur.afficherMensualité(1L);\r\n\r\n        }catch (Exception e) {\r\n            System.out.println(e.getMessage());\r\n        }\r\n        System.out.println(\"Test 1 Completed\");\r\n    }\r\n\r\n    public static void Test2() throws Exception{\r\n        String daoClass, serviceClass, controllerClass;\r\n        Properties properties = new Properties();\r\n        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();\r\n        var config=classLoader.getResourceAsStream(\"Marouan/CreditSimulator/config.properties\");\r\n        if(config==null){\r\n            throw new Exception(\"config.properties not found\");\r\n\r\n        }\r\n        else\r\n        {\r\n            try{\r\n                properties.load(config);\r\n                daoClass = properties.getProperty(\"daoClass\");\r\n                serviceClass = properties.getProperty(\"serviceClass\");\r\n                controllerClass = properties.getProperty(\"controllerClass\");\r\n\r\n            }catch (Exception e){\r\n                throw new Exception(\"config.properties failed to load config files\");\r\n            }\r\n            finally {\r\n                properties.clear();\r\n            }\r\n            }\r\n        try{\r\n            Class cDao = Class.forName(daoClass);\r\n            IDao<Credit,Long> dao= (IDao<Credit, Long>)cDao.getDeclaredConstructor().newInstance();\r\n        }catch (Exception e){\r\n            throw new RuntimeException(\"daoClass not found\");\r\n        }\r\n\r\n\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Marouan/CreditSimulator/ElOuardi_Marouan_CreditSimulatorApp.java b/src/Marouan/CreditSimulator/ElOuardi_Marouan_CreditSimulatorApp.java
+--- a/src/Marouan/CreditSimulator/ElOuardi_Marouan_CreditSimulatorApp.java	(revision c10c55af7d80defdd378b2f6ae9fb2f085f067df)
++++ b/src/Marouan/CreditSimulator/ElOuardi_Marouan_CreditSimulatorApp.java	(date 1678288116403)
+@@ -7,15 +7,23 @@
+ import Marouan.CreditSimulator.Metier.CreditMetier;
+ import Marouan.CreditSimulator.Metier.ICreditMetier;
+ import Marouan.CreditSimulator.Modele.Credit;
++import org.springframework.context.ApplicationContext;
++import org.springframework.context.annotation.AnnotationConfigApplicationContext;
++import org.springframework.context.support.ClassPathXmlApplicationContext;
+ 
++import java.io.IOException;
++import java.lang.reflect.Method;
+ import java.util.Properties;
+ 
+ public class ElOuardi_Marouan_CreditSimulatorApp {
+     static ICreditControleur creditControleur;
+ 
+-    public static void main(String[] args) {
+-    Test1();
++    public static void main(String[] args) throws Exception {
++    Test3();
+     }
++    //    ===================================================================================================================================================
++    //                                                                    TEST 1
++    //    ===================================================================================================================================================
+     public static void Test1(){
+         IDao<Credit, Long> dao = new CreditDao();
+         creditControleur = new CreditControleur();
+@@ -31,39 +39,60 @@
+         }
+         System.out.println("Test 1 Completed");
+     }
++//    =================================================================================================================================================
++//                                                                    TEST 2
++//    =================================================================================================================================================
++    public static void Test2(){
++        IDao<Credit, Long> dao = null;
++        ICreditControleur controleur= null;
++        ICreditMetier metier= null;
+ 
+-    public static void Test2() throws Exception{
+-        String daoClass, serviceClass, controllerClass;
+-        Properties properties = new Properties();
+         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+-        var config=classLoader.getResourceAsStream("Marouan/CreditSimulator/config.properties");
+-        if(config==null){
+-            throw new Exception("config.properties not found");
+-
+-        }
+-        else
+-        {
+-            try{
+-                properties.load(config);
+-                daoClass = properties.getProperty("daoClass");
+-                serviceClass = properties.getProperty("serviceClass");
+-                controllerClass = properties.getProperty("controllerClass");
++//        classLoader.getResourceAsStream("Marouan/CreditSimulator/config.properties");
++        var config = classLoader.getResourceAsStream("Marouan/CreditSimulator/config.properties");
++        Properties props = new Properties();
++        try
++    {
++            props.load(config);
++            var daoClass = props.getProperty("DAO");
++            var serviceClass = props.getProperty("SERVICE");
++            var controllerClass = props.getProperty("CONTROLLER");
+ 
+-            }catch (Exception e){
+-                throw new Exception("config.properties failed to load config files");
+-            }
+-            finally {
+-                properties.clear();
+-            }
+-            }
+-        try{
+             Class cDao = Class.forName(daoClass);
+-            IDao<Credit,Long> dao= (IDao<Credit, Long>)cDao.getDeclaredConstructor().newInstance();
+-        }catch (Exception e){
+-            throw new RuntimeException("daoClass not found");
+-        }
++            dao = (IDao<Credit, Long>) cDao.getDeclaredConstructor().newInstance();
++
++            Class cMetier = Class.forName(serviceClass);
++            metier = (ICreditMetier) cDao.getDeclaredConstructor().newInstance();
++
++            Class cControleur = Class.forName(controllerClass);
++            controleur = (ICreditControleur) cDao.getDeclaredConstructor().newInstance();
++
++        //Dependecys Injection
++
++        Method setMetier = cControleur.getMethod("setCreditMetier", ICreditMetier.class);
++        setMetier.invoke(controleur,metier);
++
++        Method setDao = cMetier.getMethod("setCreditDao", IDao.class);
++        setDao.invoke(metier,dao);
+ 
+ 
++        controleur.afficherMensualité(1L);
+ 
++        }
++        catch (Exception e)
++        {
++            throw new RuntimeException(e.getMessage());
++        }
++        finally {
++            props.clear();
++        }
++    }
++    //    ============================================================================================================================================
++    //                                                                    TEST 3
++    //    ============================================================================================================================================
++    public static void Test3(){
++        ApplicationContext application = new ClassPathXmlApplicationContext("sprinc-IOC.xml");
++        ICreditControleur controleur = application.getBean(ICreditControleur.class);
++        controleur.afficherMensualité(1L);
+     }
+ }
+\ No newline at end of file
+Index: SimulationCredit.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module type=\"JAVA_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\" inherit-compiler-output=\"true\">\r\n    <exclude-output />\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <sourceFolder url=\"file://$MODULE_DIR$/src\" isTestSource=\"false\" />\r\n    </content>\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n    <orderEntry type=\"library\" name=\"lombok-1.18.26\" level=\"project\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/SimulationCredit.iml b/SimulationCredit.iml
+--- a/SimulationCredit.iml	(revision c10c55af7d80defdd378b2f6ae9fb2f085f067df)
++++ b/SimulationCredit.iml	(date 1678286134492)
+@@ -1,5 +1,14 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <module type="JAVA_MODULE" version="4">
++  <component name="FacetManager">
++    <facet type="Spring" name="Spring">
++      <configuration>
++        <fileset id="fileset" name="Sprinc IOC" removed="false">
++          <file>file://$MODULE_DIR$/src/sprinc-IOC.xml</file>
++        </fileset>
++      </configuration>
++    </facet>
++  </component>
+   <component name="NewModuleRootManager" inherit-compiler-output="true">
+     <exclude-output />
+     <content url="file://$MODULE_DIR$">
+@@ -8,5 +17,7 @@
+     <orderEntry type="inheritedJdk" />
+     <orderEntry type="sourceFolder" forTests="false" />
+     <orderEntry type="library" name="lombok-1.18.26" level="project" />
++    <orderEntry type="library" name="spring-context-6.0.3" level="project" />
++    <orderEntry type="library" name="lib" level="project" />
+   </component>
+ </module>
+\ No newline at end of file
+Index: src/sprinc-IOC.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/sprinc-IOC.xml b/src/sprinc-IOC.xml
+new file mode 100644
+--- /dev/null	(date 1678287666535)
++++ b/src/sprinc-IOC.xml	(date 1678287666535)
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<beans xmlns="http://www.springframework.org/schema/beans"
++       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
++
++    <bean id="dao" class="Marouan.CreditSimulator.Dao.daoVolatile.CreditDao"/>
++    <bean id="metier" class="Marouan.CreditSimulator.Metier.CreditMetier">
++        <property name="CreditDao" ref="dao"/>
++    </bean>
++    <bean id="controller" class="Marouan.CreditSimulator.Presentation.CreditControleur">
++        <property name="CreditMetier" ref="metier"/>
++    </bean>
++</beans>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"95e4be49-161e-4bd4-a598-b9ea29ed3636\" name=\"Changes\" comment=\"init1\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ChangesViewManager\">\r\n    <option name=\"groupingKeys\">\r\n      <option value=\"directory\" />\r\n    </option>\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Interface\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2MPlfj1ESxdrcIcNtPYlJopbBVw\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Electro Fatal\\Desktop\\SimulationCredit\\lib\" />\r\n      <recent name=\"C:\\Users\\Electro Fatal\\Desktop\\SimulationCredit\\\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"ElOuardi_Marouan_CreditSimulatorApp\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"Marouan.CreditSimulator.ElOuardi_Marouan_CreditSimulatorApp\" />\r\n      <module name=\"SimulationCredit\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"Marouan.CreditSimulator.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.ElOuardi_Marouan_CreditSimulatorApp\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"95e4be49-161e-4bd4-a598-b9ea29ed3636\" name=\"Changes\" comment=\"\" />\r\n      <created>1677677212028</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1677677212028</updated>\r\n      <workItem from=\"1677677212043\" duration=\"6222000\" />\r\n      <workItem from=\"1677833817275\" duration=\"99000\" />\r\n      <workItem from=\"1678032208212\" duration=\"307000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"init1\">\r\n      <created>1678032387994</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1678032387994</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"init1\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"init1\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision c10c55af7d80defdd378b2f6ae9fb2f085f067df)
++++ b/.idea/workspace.xml	(date 1678567130255)
+@@ -4,7 +4,19 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="95e4be49-161e-4bd4-a598-b9ea29ed3636" name="Changes" comment="init1" />
++    <list default="true" id="95e4be49-161e-4bd4-a598-b9ea29ed3636" name="Changes" comment="init 1">
++      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/libraries/spring_context_6_0_3.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/lib/spring-aop-6.0.3.jar" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/lib/spring-beans-6.0.3.jar" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/lib/spring-context-6.0.3.jar" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/lib/spring-core-6.0.3.jar" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/sprinc-IOC.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/SimulationCredit.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SimulationCredit.iml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/Marouan/CreditSimulator/ElOuardi_Marouan_CreditSimulatorApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Marouan/CreditSimulator/ElOuardi_Marouan_CreditSimulatorApp.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/Marouan/CreditSimulator/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/Marouan/CreditSimulator/config.properties" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -27,13 +39,16 @@
+     <option name="stateVersion" value="1" />
+   </component>
+   <component name="ProjectId" id="2MPlfj1ESxdrcIcNtPYlJopbBVw" />
+-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
++  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
++    <ConfirmationsSetting value="2" id="Add" />
++  </component>
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+   <component name="PropertiesComponent">{
+   &quot;keyToString&quot;: {
++    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+@@ -42,8 +57,18 @@
+     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors&quot;,
++    &quot;spring.configuration.checksum&quot;: &quot;7a26a0a74ad7ef0a3a2b83f9cf03827d&quot;,
+     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
++  },
++  &quot;keyToStringList&quot;: {
++    &quot;ChangesTree.GroupingKeys&quot;: [
++      &quot;module&quot;,
++      &quot;directory&quot;
++    ]
+   }
+ }</component>
+   <component name="RecentsManager">
+@@ -82,7 +107,17 @@
+       <updated>1677677212028</updated>
+       <workItem from="1677677212043" duration="6222000" />
+       <workItem from="1677833817275" duration="99000" />
+-      <workItem from="1678032208212" duration="307000" />
++      <workItem from="1678032208212" duration="685000" />
++      <workItem from="1678034779987" duration="311000" />
++      <workItem from="1678035117911" duration="59000" />
++      <workItem from="1678035375146" duration="113000" />
++      <workItem from="1678100535568" duration="242000" />
++      <workItem from="1678275646899" duration="433000" />
++      <workItem from="1678281779748" duration="4663000" />
++      <workItem from="1678286506430" duration="701000" />
++      <workItem from="1678287231183" duration="924000" />
++      <workItem from="1678494002725" duration="64000" />
++      <workItem from="1678566948337" duration="181000" />
+     </task>
+     <task id="LOCAL-00001" summary="init1">
+       <created>1678032387994</created>
+@@ -91,7 +126,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1678032387994</updated>
+     </task>
+-    <option name="localTasksCounter" value="2" />
++    <task id="LOCAL-00002" summary="init 1">
++      <created>1678032713533</created>
++      <option name="number" value="00002" />
++      <option name="presentableId" value="LOCAL-00002" />
++      <option name="project" value="LOCAL" />
++      <updated>1678032713533</updated>
++    </task>
++    <option name="localTasksCounter" value="3" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -109,7 +151,9 @@
+     </option>
+   </component>
+   <component name="VcsManagerConfiguration">
++    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+     <MESSAGE value="init1" />
+-    <option name="LAST_COMMIT_MESSAGE" value="init1" />
++    <MESSAGE value="init 1" />
++    <option name="LAST_COMMIT_MESSAGE" value="init 1" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/libraries/lib.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/libraries/lib.xml b/.idea/libraries/lib.xml
+new file mode 100644
+--- /dev/null	(date 1678286134512)
++++ b/.idea/libraries/lib.xml	(date 1678286134512)
+@@ -0,0 +1,10 @@
++<component name="libraryTable">
++  <library name="lib">
++    <CLASSES>
++      <root url="file://$PROJECT_DIR$/lib" />
++    </CLASSES>
++    <JAVADOC />
++    <SOURCES />
++    <jarDirectory url="file://$PROJECT_DIR$/lib" recursive="false" />
++  </library>
++</component>
+\ No newline at end of file
+Index: .idea/libraries/spring_context_6_0_3.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/libraries/spring_context_6_0_3.xml b/.idea/libraries/spring_context_6_0_3.xml
+new file mode 100644
+--- /dev/null	(date 1678286134527)
++++ b/.idea/libraries/spring_context_6_0_3.xml	(date 1678286134527)
+@@ -0,0 +1,10 @@
++<component name="libraryTable">
++  <library name="spring-context-6.0.3">
++    <CLASSES>
++      <root url="jar://$PROJECT_DIR$/lib/spring-context-6.0.3.jar!/" />
++      <root url="jar://$PROJECT_DIR$/lib/spring-core-6.0.3.jar!/" />
++    </CLASSES>
++    <JAVADOC />
++    <SOURCES />
++  </library>
++</component>
+\ No newline at end of file
+Index: src/Marouan/CreditSimulator/config.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>DAO = Dao.daoVolatile.CreditDao\r\nSERVICE = Metier.CreditMetier\r\nCONTROLLER = Presentation.CreditControleur
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/src/Marouan/CreditSimulator/config.properties b/src/Marouan/CreditSimulator/config.properties
+--- a/src/Marouan/CreditSimulator/config.properties	(revision c10c55af7d80defdd378b2f6ae9fb2f085f067df)
++++ b/src/Marouan/CreditSimulator/config.properties	(date 1678282180043)
+@@ -1,3 +1,3 @@
+-DAO = Dao.daoVolatile.CreditDao
+-SERVICE = Metier.CreditMetier
+-CONTROLLER = Presentation.CreditControleur
+\ No newline at end of file
++DAO = Marouan.CreditSimulator.Dao.daoVolatile.CreditDao
++SERVICE = Marouan.CreditSimulator.Metier.CreditMetier
++CONTROLLER = Marouan.CreditSimulator.Presentation.CreditControleur
+\ No newline at end of file
