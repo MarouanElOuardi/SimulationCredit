@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="95e4be49-161e-4bd4-a598-b9ea29ed3636" name="Changes" comment="init 2">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/spring-aop-6.0.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/spring-context-6.0.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/spring-core-6.0.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sprinc-IOC.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Marouan/CreditSimulator/TestJDBC/TestJDBC.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SimulationCredit.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SimulationCredit.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Marouan/CreditSimulator/ElOuardi_Marouan_CreditSimulatorApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Marouan/CreditSimulator/ElOuardi_Marouan_CreditSimulatorApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +55,13 @@
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "spring.configuration.checksum": "f9e116184f1a9ac9fd6a5d12464a35c1",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -70,7 +70,7 @@
       <recent name="C:\Users\Electro Fatal\Desktop\SimulationCredit\" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.TestJDBC">
     <configuration name="ElOuardi_Marouan_CreditSimulatorApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Marouan.CreditSimulator.ElOuardi_Marouan_CreditSimulatorApp" />
       <module name="SimulationCredit" />
@@ -84,8 +84,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestJDBC" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Marouan.CreditSimulator.TestJDBC.TestJDBC" />
+      <module name="SimulationCredit" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Marouan.CreditSimulator.TestJDBC.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.TestJDBC" />
         <item itemvalue="Application.ElOuardi_Marouan_CreditSimulatorApp" />
       </list>
     </recent_temporary>
@@ -103,7 +117,9 @@
       <workItem from="1678032208212" duration="307000" />
       <workItem from="1678641455297" duration="179000" />
       <workItem from="1678642180100" duration="329000" />
-      <workItem from="1678642535889" duration="404000" />
+      <workItem from="1678642535889" duration="593000" />
+      <workItem from="1678647935613" duration="7000" />
+      <workItem from="1678888324957" duration="3399000" />
     </task>
     <task id="LOCAL-00001" summary="init1">
       <created>1678032387994</created>
