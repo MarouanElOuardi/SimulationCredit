@@ -24,7 +24,16 @@ public class FactoryMySQL extends Factory{
                                 LOGIN = "SDB_LOGIN",
                                 PASSWORD = "SDB_PASSWORD",
                                 DB = "DB_NAME";
-    public static  FactoryMySQL Instance = getInstance();
+    public static  FactoryMySQL Instance;
+
+    static {
+        try {
+            Instance = getInstance();
+        } catch (DAOConfigException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private static Connection connection;
     private String url, login, password;
 
