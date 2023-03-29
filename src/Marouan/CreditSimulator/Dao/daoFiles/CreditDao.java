@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -14,6 +15,32 @@ public class CreditDao implements IDao <Credit, Long>{
     public Credit trouverParId(Long id) {
         return BD_Credits().stream().filter(credit -> credit.getId()==id).findFirst().get();
     }
+
+    @Override
+    public List<Credit> trouverTous() {
+        return BD_Credits().stream().toList();
+    }
+
+    @Override
+    public Credit Enregistrer(Credit credit) {
+        return null;
+    }
+
+    @Override
+    public Credit Modifier(Credit credit) {
+        return null;
+    }
+
+    @Override
+    public boolean Supprimer(Credit credit) {
+        return false;
+    }
+
+    @Override
+    public boolean SupprimerParId(Long aLong) {
+        return false;
+    }
+
     static Set<Credit> BD_Credits(){
         var credits= new HashSet<Credit>(
                 Arrays.asList(
