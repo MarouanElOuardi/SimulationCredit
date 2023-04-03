@@ -1,7 +1,7 @@
-package Marouan.CreditSimulator.Dao;
+package Marouan.CreditSimulator.Dao.Factories;
 
+import Marouan.CreditSimulator.Dao.IDao;
 import Marouan.CreditSimulator.Modele.Credit;
-import com.mysql.cj.xdevapi.Client;
 
 public abstract class Factory {
 
@@ -9,7 +9,7 @@ public abstract class Factory {
     public static final int DAO_FILES = 2;
     public static final int DAO_MYSQL = 3;
 
-    public abstract  IDao<Credit, Long> getCreditDao();
+    public abstract IDao<Credit, Long> getCreditDao();
 
     public static Factory getFactory(int type){
         switch (type){

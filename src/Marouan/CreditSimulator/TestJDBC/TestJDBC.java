@@ -21,7 +21,7 @@ public class TestJDBC {
             connection=DriverManager.getConnection(url,login,password);
             System.out.println("Connection Succeded");
             Statement statement=connection.createStatement();
-            var resultSet=statement.executeQuery("select * from credit where id_credit=2");
+            var resultSet=statement.executeQuery("select * from credit");
             while (resultSet.next()){
                 System.out.println("=========================================================");
                 System.out.println("                        CREDITs                          ");

@@ -1,23 +1,18 @@
-package Marouan.CreditSimulator.Dao;
+package Marouan.CreditSimulator.Dao.Factories;
 
+import Marouan.CreditSimulator.Dao.IDao;
 import Marouan.CreditSimulator.Dao.daoExceptions.DAOConfigException;
 import Marouan.CreditSimulator.Modele.Credit;
-import Marouan.CreditSimulator.TestJDBC.Singleton;
 
-import java.io.DataOutput;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-import Marouan.CreditSimulator.Dao.daoExceptions.DAOException;
-import Marouan.CreditSimulator.Dao.daoExceptions.DAOException;
 
 
-
-
-public class FactoryMySQL extends Factory{
+public class FactoryMySQL extends Factory {
     private static final String PROPERTIES_FILE = "Dao/dao.properties",
                                 URL = "SDB_URL",
                                 DRIVER = "SDB_DRIVER",

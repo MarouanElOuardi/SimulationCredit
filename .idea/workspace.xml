@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="95e4be49-161e-4bd4-a598-b9ea29ed3636" name="Changes" comment="init 29/03/2023">
-      <change afterPath="$PROJECT_DIR$/src/Marouan/CreditSimulator/Dao/dao.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Marouan/CreditSimulator/Dao/FactoryMySQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Marouan/CreditSimulator/Dao/FactoryMySQL.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Marouan/CreditSimulator/Dao/daoMySQL/CreditDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9d5c912b-a6a3-4bac-9c13-48c3d6723241.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9d5c912b-a6a3-4bac-9c13-48c3d6723241.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Marouan/CreditSimulator/Dao/Factory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Marouan/CreditSimulator/Dao/Factories/Factory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Marouan/CreditSimulator/Dao/FactoryMySQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Marouan/CreditSimulator/Dao/Factories/FactoryMySQL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Marouan/CreditSimulator/Dao/IDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Marouan/CreditSimulator/Dao/IDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Marouan/CreditSimulator/TestJDBC/TestJDBC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Marouan/CreditSimulator/TestJDBC/TestJDBC.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,30 +45,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;f9e116184f1a9ac9fd6a5d12464a35c1&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "spring.configuration.checksum": "f9e116184f1a9ac9fd6a5d12464a35c1",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Electro Fatal\Desktop\SimulationCredit\lib" />
@@ -125,6 +130,7 @@
       <workItem from="1680020881080" duration="3912000" />
       <workItem from="1680048866335" duration="2276000" />
       <workItem from="1680051308157" duration="333000" />
+      <workItem from="1680510547747" duration="1778000" />
     </task>
     <task id="LOCAL-00001" summary="init1">
       <created>1678032387994</created>
